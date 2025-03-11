@@ -1,6 +1,11 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Auth.Service.Infrastructure.Data.EF;
 
-app.MapGet("/", () => "Hello World!");
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSqlServerDatastore(builder.Configuration);
+var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.MigrateDatabase();
+}
 
 app.Run();
